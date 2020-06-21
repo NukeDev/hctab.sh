@@ -1,2 +1,2 @@
 language: csharp
-solution: hctab.sh.sln
+solution: ./hctab.sh/hctab.sh.sln
