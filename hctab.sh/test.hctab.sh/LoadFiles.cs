@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace test.hctab.sh
 {
-    class Step1 : BatchStep, IBatchStep
+    class LoadFiles : BatchStep, IBatchStep
     {
         private List<Byte> Data { get; set; }
 

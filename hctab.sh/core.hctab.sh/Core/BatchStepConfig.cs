@@ -17,15 +17,17 @@ namespace core.hctab.sh.Core
         public string ClassName { get; set; }
         public List<Scheduler> Scheduling { get; set; }
         public bool isSchedulerActive { get; set; }
-
+        public int? RunOrder { get; set; }
         public void SetStepData(BatchStep step)
         {
+            step.Name = this.Name;
             step.Active = this.Active;
             step.ClassName = this.ClassName;
             step.Description = this.Description;
             step.Scheduling = this.Scheduling;
             step.isSchedulerActive = this.isSchedulerActive;
             step.ID = this.ID;
+            step.RunOrder = this.RunOrder;
         }
     }
 }

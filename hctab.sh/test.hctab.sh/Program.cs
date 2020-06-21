@@ -13,7 +13,7 @@ namespace test.hctab.sh
         static void Main(string[] args)
         {
             var batch = new core.hctab.sh.Batch.Batch();
-            batch.Init("Config.json");
+            batch.Init("Config/Config.json");
             Console.Read();
         }
     }

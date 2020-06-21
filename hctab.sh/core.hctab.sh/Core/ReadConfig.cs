@@ -12,7 +12,6 @@ namespace core.hctab.sh.Core
     public class ReadConfig
     {
         public string Name { get; set; }
-        public int LoggingType { get; set; }
         public List<BatchStepConfig> StepList { get; set; }
 
         public ReadConfig Read(string configPath)

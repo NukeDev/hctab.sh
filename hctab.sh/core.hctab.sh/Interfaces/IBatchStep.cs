@@ -16,5 +16,6 @@ namespace core.hctab.sh.Interfaces
         string ClassName { get; set; }
         List<Scheduler> Scheduling { get; set; }
         bool isSchedulerActive { get; set; }
+        int? RunOrder { get; set; }
     }
 }

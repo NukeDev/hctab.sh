@@ -1,10 +1,9 @@
 ﻿{
 	"Name":"Batch",
-	"LoggingType": 1,
 	"StepList": [
 		{
-			"ID":0,
-			"Name":"Step 1",
+			"ID": 0,
+			"Name": "Step 1",
 			"Description": "batch step 1",
 			"Active": true,
 			"ClassName": "test.hctab.sh.Step1",
@@ -12,16 +11,39 @@
 				{
 					"DayOfWeek": "Sunday",
 					"hhmmFrom": "15:30:00",
-					"hhmmTo":"20:00:00"
+					"hhmmTo": "20:00:00"
 				},
 				{
 					"DayOfWeek": "Sunday",
 					"hhmmFrom": "21:30:00",
-					"hhmmTo":"23:00:00"
+					"hhmmTo": "23:00:00"
 				}
-				
+
 			],
-			"isSchedulerActive": true
+			"isSchedulerActive": true,
+			"RunOrder": 1
+		},
+		{
+			"ID": 1,
+			"Name": "Load Files",
+			"Description": "Load files from fb",
+			"Active": true,
+			"ClassName": "test.hctab.sh.LoadFiles",
+			"Scheduling": [
+				{
+					"DayOfWeek": "Sunday",
+					"hhmmFrom": "15:30:00",
+					"hhmmTo": "20:00:00"
+				},
+				{
+					"DayOfWeek": "Sunday",
+					"hhmmFrom": "21:30:00",
+					"hhmmTo": "23:00:00"
+				}
+
+			],
+			"isSchedulerActive": true,
+			"RunOrder": 2
 		}
 	
 	]

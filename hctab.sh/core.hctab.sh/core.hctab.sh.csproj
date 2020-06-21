@@ -51,13 +51,12 @@
     <Compile Include="Core\ReadConfig.cs" />
     <Compile Include="Interfaces\IBatchStep.cs" />
     <Compile Include="Interfaces\IScheduler.cs" />
+    <Compile Include="Log\AppLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Log\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

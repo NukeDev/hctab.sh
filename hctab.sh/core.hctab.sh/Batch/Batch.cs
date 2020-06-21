@@ -1,28 +1,35 @@
 ﻿using core.hctab.sh.Core;
 using core.hctab.sh.Interfaces;
+using core.hctab.sh.Log;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace core.hctab.sh.Batch
 {
-    public class Batch
+    public class Batch : AppLogger
     {
         private List<int> waitingList = new List<int>();
 
         private string Name { get; set; }
-        private int LoggingType { get; set; }
         private DateTimeOffset StartupTime = DateTimeOffset.Now;
         private List<BatchStep> StepList = new List<BatchStep>();
         private List<BatchStepConfig> ConfigStepList = new List<BatchStepConfig>();
+        public AppLogger Logger = new AppLogger();
+
         public void Init(string ConfigPath)
         {
+            
+            Logger.WriteInformation($"Loading Config file... -> {ConfigPath}");
             var cfg = new ReadConfig().Read(ConfigPath);
             this.Name = cfg.Name;
             this.ConfigStepList = cfg.StepList;
+            Logger.WriteInformation($"Config loaded!");
+            Logger.WriteInformation($"Loading Batch Step List...");
             LoadSteps();
             CheckStepList();
         }
@@ -33,6 +40,7 @@ namespace core.hctab.sh.Batch
             {
                 var myStep = ((BatchStep)GetInstance(step.ClassName));
                 step.SetStepData(myStep);
+                Logger.WriteInformation($"{step.Name} Loaded! - Active: {step.Active}, ID: {step.ID}");
                 StepList.Add(myStep);
             }
             
@@ -67,11 +75,13 @@ namespace core.hctab.sh.Batch
                         if (scheduler.Day == DateTime.Now.DayOfWeek && hhmmFrom <= DateTime.Now && DateTime.Now <= hhmmTo && step.isSchedulerActive)
                         {
                             waitingList.Add(step.ID);
+                            Logger.WriteWarning($"{step.Name} Scheduled! - DayOfWeek: {scheduler.Day}, hhmmFrom: {scheduler.hhmmFrom}, hhmmTo: {scheduler.hhmmTo}");
                             break;
                         }
                         else if (!step.isSchedulerActive)
                         {
                             waitingList.Add(step.ID);
+                            Logger.WriteWarning($"{step.Name} Scheduled! - Scheduler disabled, but step active!");
                             break;
                         }
                     }
@@ -82,26 +92,32 @@ namespace core.hctab.sh.Batch
             {
                 foreach(var id in waitingList)
                 {
-                    Execute(StepList.Where(x => x.ID == id).FirstOrDefault());
+                    Logger.WriteWarning($"{StepList.Where(x => x.ID == id).Select(x => x.Name).FirstOrDefault()} Started!");
+                    Execute(StepList.Where(x => x.ID == id).OrderBy(x => x.RunOrder).FirstOrDefault());
                 }
+
+                Logger.WriteWarning($"All steps finished! Run time: {(DateTimeOffset.Now.DateTime - StartupTime.DateTime).TotalMinutes.ToString() } mins");
+
             }
             else
             {
-                Console.WriteLine("Nothing to be scheduled!");
+                Logger.WriteWarning($"Nothing to run.. :(");
             }
 
         }
 
         private void Execute(BatchStep Step)
         {
-            Console.WriteLine($"Executing step ID: {Step.ID}");
             if (Step.IsApplicable())
             {
-                Console.WriteLine($"step ID: {Step.ID} applicable");
+                Logger.WriteInformation($"{Step.Name}: Is Applicable");
+                Logger.WriteInformation($"{Step.Name}: Reading Data..");
                 Step.ReadData();
-                Console.WriteLine($"step ID: {Step.ID} Read Data");
+                Logger.WriteInformation($"{Step.Name}: Verifing..");
                 Step.Verify();
-                Console.WriteLine($"step ID: {Step.ID} Verify");
+                Logger.WriteInformation($"{Step.Name}: Saving data...");
+                Step.SaveData();
+                Logger.WriteInformation($"{Step.Name}: Finishing...");
             }
         }
 
