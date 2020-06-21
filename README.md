@@ -1,5 +1,6 @@
 # hctab.sh
 [![Build Status](https://travis-ci.org/NukeDev/hctab.sh.svg?branch=master)](https://travis-ci.org/NukeDev/hctab.sh)
+[![Nuget](https://img.shields.io/nuget/dt/core.hctab.sh)](https://www.nuget.org/packages/core.hctab.sh)
 [![Stars](https://githubbadges.com/star.svg?user=NukeDev&repo=hctab.sh)](https://github.com/NukeDev/hctab.sh)
 [![Forks](https://githubbadges.com/fork.svg?user=NukeDev&repo=hctab.sh)](https://github.com/NukeDev/hctab.sh)
 
