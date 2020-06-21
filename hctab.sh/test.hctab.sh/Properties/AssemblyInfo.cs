@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 
 
 [assembly: AssemblyTitle("test.hctab.sh")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Test Batch Environment")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("test.hctab.sh")]
-[assembly: AssemblyCopyright("Copyright ©  2020")]
+[assembly: AssemblyCopyright("Copyright © NukeDev 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]

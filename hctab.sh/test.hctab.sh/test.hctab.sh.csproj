@@ -56,10 +56,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\core.hctab.sh\core.hctab.sh.csproj">
-      <Project>{40391B71-D53D-49DF-8405-33CA886B1AF1}</Project>
+      <Project>{40391b71-d53d-49df-8405-33ca886b1af1}</Project>
       <Name>core.hctab.sh</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

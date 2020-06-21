@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<package>
+  <metadata>
+    <id>core.hctab.sh</id>
+    <version>1.0.1</version>
+    <title>hctab.sh Core</title>
+    <authors>NukeDev</authors>
+    <owners>NukeDev</owners>
+    <licenseUrl>https://github.com/NukeDev/hctab.sh/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/NukeDev/hctab.sh/</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>This is a simple library which allows the rapid creation of multi-step batch programs with scheduling included</description>
+    <releaseNotes>Initial 1.0.0 release</releaseNotes>
+    <copyright>Copyright 2020 NukeDev</copyright>
+    <tags>sample nuget</tags>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="12.0.3" />
+    </dependencies>
+    <summary> This is a simple library, designed only for the .NET Framework, which allows the rapid creation of multi-step batch programs with scheduling included. Through a simple configuration file (json for now, soon also through SQL database!) It is possible to configure the steps of the batch. The creation of a step occurs by extending the base class BatchStep and configuring the namespace relating to it in the json file. The activation and execution of the step takes place at runtime. </summary>
+  </metadata>
+  <files>
+    <file src=".\core.hctab.sh\bin\Debug\core.hctab.sh.dll" target="lib\net48" />
+    <file src=".\core.hctab.sh\bin\Debug\core.hctab.sh.pdb" target="lib\net48" />
+  </files>
+</package>

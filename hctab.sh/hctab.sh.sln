@@ -7,6 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test.hctab.sh", "test.hctab
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "core.hctab.sh", "core.hctab.sh\core.hctab.sh.csproj", "{40391B71-D53D-49DF-8405-33CA886B1AF1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3F118118-36B8-46D7-9384-F35C6D189D14}"
+	ProjectSection(SolutionItems) = preProject
+		core.hctab.sh.nuspec = core.hctab.sh.nuspec
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
