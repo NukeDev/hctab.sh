@@ -24,8 +24,8 @@ jobs:
         steps:
           - uses: actions/checkout@v1
           - name: Pack nuget Package
-          run: dotnet pack --configuration Release
+            run: dotnet pack --configuration Release
           - name: Push package to nuget
-          run: dotnet nuget push **/*.nupkg
+            run: dotnet nuget push **/*.nupkg
                 --api-key ${{ secrets.NUGET_DEPLOY_KEY }}
                 --source https://api.nuget.org/v3/index.json
