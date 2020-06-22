@@ -15,7 +15,7 @@ jobs:
             with:
                 dotnet-version: 3.0.100
           - name: Build with dotnet
-            run: dotnet build --configuration Release
+            run: dotnet build ./hctab.sh/core.hctab.sh/core.hctab.sh.csproj --configuration Release
           - name: Test with dotnet
             run: dotnet test
     deploy:
@@ -24,7 +24,7 @@ jobs:
         steps:
           - uses: actions/checkout@v1
           - name: Pack nuget Package
-            run: dotnet pack --configuration Release
+            run: dotnet pack ./hctab.sh/core.hctab.sh/core.hctab.sh.csproj --configuration Release
           - name: Push package to nuget
             run: dotnet nuget push **/*.nupkg
                 --api-key ${{ secrets.NUGET_DEPLOY_KEY }}
