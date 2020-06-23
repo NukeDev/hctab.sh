@@ -41,7 +41,7 @@ By instantiating the **Batch** class, you can call the **Init** method with the 
 				{
 					"DaysOfWeek": "sun,mon,tue",
 					"hhmmFrom": "15:30:00",
-					"hhmmTo": "23:20:00"
+					"hhmmTo": "23:00:00"
 				},
 				{
 					"DaysOfWeek": "sun,mon,tue",
