@@ -3,6 +3,7 @@ using core.hctab.sh.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
@@ -12,7 +13,7 @@ namespace test.hctab.sh
 {
     class LoadFiles : BatchStep, IBatchStep
     {
-        private List<Byte> Data { get; set; }
+        private List<string> Data = new List<string>();
 
         public override bool IsApplicable()
         {
@@ -21,21 +22,26 @@ namespace test.hctab.sh
 
         public override void ReadData()
         {
-            Console.WriteLine("Reading data...");
-            Thread.Sleep(2000);
+            WebClient wb = new WebClient();
+            for (int x = 0; x < 1000; x++)
+            {
+                Data.Add(wb.DownloadString($"https://reqres.in/api/users?page={x}"));
+                Logger.WriteInformation($"Doing request {x}");
+            }
         }
 
         public override void SaveData()
         {
-            Console.WriteLine("Saving data...");
+           
             Thread.Sleep(2000);
         }
 
         public override void Verify()
         {
-            Console.WriteLine("Verifing data...");
-            Logger.WriteInformation("WOW!");
-            Thread.Sleep(2000);
+            foreach (var str in Data)
+            {
+                Logger.WriteInformation($"Lenght {str.Length}");
+            }
 
         }
     }

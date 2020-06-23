@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>core.hctab.sh</id>
-    <version>1.0.1</version>
+    <version>1.0.5</version>
     <title>hctab.sh Core</title>
     <authors>NukeDev</authors>
     <owners>NukeDev</owners>
@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/NukeDev/hctab.sh/</projectUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>This is a simple library which allows the rapid creation of multi-step batch programs with scheduling included</description>
-    <releaseNotes>Initial 1.0.0 release</releaseNotes>
+    <releaseNotes>1.0.5 release</releaseNotes>
     <copyright>Copyright 2020 NukeDev</copyright>
     <tags>sample nuget</tags>
     <dependencies>

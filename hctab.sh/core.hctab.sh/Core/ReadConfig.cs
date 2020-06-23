@@ -24,7 +24,7 @@ namespace core.hctab.sh.Core
             }
             catch(Exception ex)
             {
-                Console.WriteLine("ERROR WHILE LOADING CONFIG: " + ex.Message);
+                Console.WriteLine("There was an ERROR while loading config file: " + ex.Message);
                 Console.ReadKey();
                 Environment.Exit(0);
                 return null;
@@ -32,5 +32,12 @@ namespace core.hctab.sh.Core
           
         }
 
+    }
+
+    public class SchedulerConfig : ISchedulerConfig
+    {
+        public string DaysOfWeek { get; set; }
+        public string hhmmFrom { get; set; }
+        public string hhmmTo { get; set; }
     }
 }

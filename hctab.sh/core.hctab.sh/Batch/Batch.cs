@@ -23,15 +23,22 @@ namespace core.hctab.sh.Batch
 
         public void Init(string ConfigPath)
         {
-            
-            Logger.WriteInformation($"Loading Config file... -> {ConfigPath}");
-            var cfg = new ReadConfig().Read(ConfigPath);
-            this.Name = cfg.Name;
-            this.ConfigStepList = cfg.StepList;
-            Logger.WriteInformation($"Config loaded!");
-            Logger.WriteInformation($"Loading Batch Step List...");
-            LoadSteps();
-            CheckStepList();
+            try
+            {
+                Logger.WriteInformation($"Loading Config file... -> {ConfigPath}");
+                var cfg = new ReadConfig().Read(ConfigPath);
+                this.Name = cfg.Name;
+                this.ConfigStepList = cfg.StepList;
+                Logger.WriteInformation($"Config loaded!");
+                Logger.WriteInformation($"Loading Batch Step List...");
+                LoadSteps();
+                CheckStepList();
+            }
+            catch(Exception ex)
+            {
+                Logger.WriteError(ex.Message);
+            }
+           
         }
 
         private void LoadSteps()
@@ -92,8 +99,11 @@ namespace core.hctab.sh.Batch
             {
                 foreach(var id in waitingList)
                 {
-                    Logger.WriteWarning($"{StepList.Where(x => x.ID == id).Select(x => x.Name).FirstOrDefault()} Started!");
-                    Execute(StepList.Where(x => x.ID == id).OrderBy(x => x.RunOrder).FirstOrDefault());
+                    var step = StepList.Where(x => x.ID == id).FirstOrDefault();
+
+                    Logger.WriteWarning($"{step.Name} Started!");
+
+                    Execute(step);
                 }
 
                 Logger.WriteWarning($"All steps finished! Run time: {(DateTimeOffset.Now.DateTime - StartupTime.DateTime).TotalMinutes.ToString() } mins");
@@ -108,17 +118,26 @@ namespace core.hctab.sh.Batch
 
         private void Execute(BatchStep Step)
         {
-            if (Step.IsApplicable())
+            try
             {
-                Logger.WriteInformation($"{Step.Name}: Is Applicable");
-                Logger.WriteInformation($"{Step.Name}: Reading Data..");
-                Step.ReadData();
-                Logger.WriteInformation($"{Step.Name}: Verifing..");
-                Step.Verify();
-                Logger.WriteInformation($"{Step.Name}: Saving data...");
-                Step.SaveData();
-                Logger.WriteInformation($"{Step.Name}: Finishing...");
+                if (Step.IsApplicable())
+                {
+                    Logger.WriteInformation($"{Step.Name}: Is Applicable");
+                    Logger.WriteInformation($"{Step.Name}: Reading Data..");
+                    Step.ReadData();
+                    Logger.WriteInformation($"{Step.Name}: Verifing..");
+                    Step.Verify();
+                    Logger.WriteInformation($"{Step.Name}: Saving data...");
+                    Step.SaveData();
+                    Logger.WriteInformation($"{Step.Name}: Finishing...");
+                }
             }
+            catch(Exception ex)
+            {
+                Logger.WriteError($"Message: {ex.Message}, InnerMessage: {ex.ToString()}");
+                Logger.WriteWarning("The latest STEP got an error, skipping to the next one...");
+            }
+            
         }
 
     }

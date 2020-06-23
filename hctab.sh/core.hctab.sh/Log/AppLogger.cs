@@ -13,7 +13,6 @@ namespace core.hctab.sh.Log
 
         public AppLogger()
         {
-
             try
             {
                 if (!Directory.Exists("logs"))

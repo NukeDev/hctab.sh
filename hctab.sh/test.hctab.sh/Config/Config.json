@@ -9,16 +9,15 @@
 			"ClassName": "test.hctab.sh.Step1",
 			"Scheduling": [
 				{
-					"DayOfWeek": "Sunday",
+					"DaysOfWeek": "sun,mon,tue",
 					"hhmmFrom": "15:30:00",
-					"hhmmTo": "20:00:00"
+					"hhmmTo": "23:00:00"
 				},
 				{
-					"DayOfWeek": "Sunday",
-					"hhmmFrom": "21:30:00",
-					"hhmmTo": "23:00:00"
+					"DaysOfWeek": "sun,mon,tue",
+					"hhmmFrom": "23:00:00",
+					"hhmmTo": "24:00:00"
 				}
-
 			],
 			"isSchedulerActive": true,
 			"RunOrder": 1
@@ -31,16 +30,10 @@
 			"ClassName": "test.hctab.sh.LoadFiles",
 			"Scheduling": [
 				{
-					"DayOfWeek": "Sunday",
+					"DaysOfWeek": "sun,mon,tue",
 					"hhmmFrom": "15:30:00",
-					"hhmmTo": "20:00:00"
-				},
-				{
-					"DayOfWeek": "Sunday",
-					"hhmmFrom": "21:30:00",
 					"hhmmTo": "23:00:00"
 				}
-
 			],
 			"isSchedulerActive": true,
 			"RunOrder": 2
