@@ -1,5 +1,6 @@
 ﻿using core.hctab.sh.Batch;
 using core.hctab.sh.Interfaces;
+using core.hctab.sh.Log;
 using core.hctab.sh.Utils;
 using System;
 using System.Collections.Generic;
@@ -19,8 +20,19 @@ namespace core.hctab.sh.Core
         public List<SchedulerConfig> Scheduling { get; set; }
         public bool isSchedulerActive { get; set; }
         public int? RunOrder { get; set; }
-        public void SetStepData(BatchStep step)
+        private AppLogger Logger { get; set; }
+        public void SetStepData(BatchStep step, AppLogger logger)
         {
+            this.Logger = logger;
+            var checks = CheckConfigValues();
+            if (checks.Count() > 0)
+            {
+                Logger.WriteError("Please check your config file!");
+                foreach (var str in checks)
+                {
+                    Logger.WriteError($"Error on variable: {str}");
+                }
+            }
             step.Name = this.Name;
             step.Active = this.Active;
             step.ClassName = this.ClassName;
@@ -29,6 +41,24 @@ namespace core.hctab.sh.Core
             step.isSchedulerActive = this.isSchedulerActive;
             step.ID = this.ID;
             step.RunOrder = this.RunOrder;
+        }
+
+        private List<string> CheckConfigValues()
+        {
+            var toRet = new List<string>();
+            if (string.IsNullOrEmpty(this.Name))
+                toRet.Add(nameof(this.Name));
+            if (string.IsNullOrEmpty(this.ClassName))
+                toRet.Add(nameof(this.ClassName));
+            if (string.IsNullOrEmpty(this.Description))
+                toRet.Add(nameof(this.Description));
+            if(this.isSchedulerActive == true && this.Scheduling.Count() == 0)
+                toRet.Add(nameof(this.Scheduling));
+            if(this.ID < 0)
+                toRet.Add(nameof(this.ID));
+
+            return toRet;
+
         }
 
         private List<Scheduler> GetScheduling(List<SchedulerConfig> sched) 
@@ -94,8 +124,7 @@ namespace core.hctab.sh.Core
         }
 
         private bool CheckSchedulingOverlap(List<Scheduler> schedulers)
-        {
-            
+        {            
             foreach(var day in schedulers.Select(x => x.Day).Distinct())
             {
                 if(schedulers.Where(x=> x.Day == day).Select(x => day).Count() > 1)
@@ -112,22 +141,28 @@ namespace core.hctab.sh.Core
                     }
                     for (int x = 0; x < count; x++)
                     {
-                        var checker = new DateTimeRange()
+                        for (int y = x+1; y < count+1; y++)
                         {
-                            Start = hhmmFrom[x],
-                            End = hhmmTo[x]
-                        };
+                            var checker = new DateTimeRange()
+                            {
+                                Start = hhmmFrom[x],
+                                End = hhmmTo[x]
+                            };
 
-                        x++;
+                            var check = checker.Intersects(new DateTimeRange()
+                            {
+                                Start = hhmmFrom[y],
+                                End = hhmmTo[y]
+                            });
 
-                        var check = checker.Intersects(new DateTimeRange()
-                        {
-                            Start = hhmmFrom[x],
-                            End = hhmmTo[x]
-                        });
+                            if (check)
+                            {
+                                Logger.WriteError($"hhmmFrom: {hhmmFrom[x].ToShortTimeString()} - hhmmTo: {hhmmTo[x].ToShortTimeString()} <-- overlaps with --> hhmmFrom: {hhmmFrom[y].ToShortTimeString()} - hhmmTo: {hhmmTo[y].ToShortTimeString()}");
+                                return true;
+                            }
+                                
+                        }
 
-                        if (check)
-                            return true;
                     }
                 }
             }

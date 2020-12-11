@@ -1,5 +1,6 @@
 ﻿using core.hctab.sh.Batch;
 using core.hctab.sh.Interfaces;
+using core.hctab.sh.Log;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,6 +14,11 @@ namespace core.hctab.sh.Core
     {
         public string Name { get; set; }
         public List<BatchStepConfig> StepList { get; set; }
+        private AppLogger Logger { get; set; }
+        public ReadConfig(AppLogger logger)
+        {
+            this.Logger = logger;
+        }
 
         public ReadConfig Read(string configPath)
         {
@@ -24,7 +30,7 @@ namespace core.hctab.sh.Core
             }
             catch(Exception ex)
             {
-                Console.WriteLine("There was an ERROR while loading config file: " + ex.Message);
+                Logger.WriteError("There was an ERROR while loading config file: " + ex.Message);
                 Console.ReadKey();
                 Environment.Exit(0);
                 return null;

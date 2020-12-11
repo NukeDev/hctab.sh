@@ -26,7 +26,7 @@ namespace core.hctab.sh.Batch
             try
             {
                 Logger.WriteInformation($"Loading Config file... -> {ConfigPath}");
-                var cfg = new ReadConfig().Read(ConfigPath);
+                var cfg = new ReadConfig(Logger).Read(ConfigPath);
                 this.Name = cfg.Name;
                 this.ConfigStepList = cfg.StepList;
                 Logger.WriteInformation($"Config loaded!");
@@ -46,7 +46,7 @@ namespace core.hctab.sh.Batch
             foreach(var step in ConfigStepList)
             {
                 var myStep = ((BatchStep)GetInstance(step.ClassName));
-                step.SetStepData(myStep);
+                step.SetStepData(myStep, Logger);
                 Logger.WriteInformation($"{step.Name} Loaded! - Active: {step.Active}, ID: {step.ID}");
                 StepList.Add(myStep);
             }
@@ -125,7 +125,7 @@ namespace core.hctab.sh.Batch
                     Logger.WriteInformation($"{Step.Name}: Is Applicable");
                     Logger.WriteInformation($"{Step.Name}: Reading Data..");
                     Step.ReadData();
-                    Logger.WriteInformation($"{Step.Name}: Verifing..");
+                    Logger.WriteInformation($"{Step.Name}: Verifying..");
                     Step.Verify();
                     Logger.WriteInformation($"{Step.Name}: Saving data...");
                     Step.SaveData();
